@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/index.ts",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/index.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "STRIPE_SECRET_KEY": "@stripe_secret_key",
+    "VITE_STRIPE_PUBLIC_KEY": "@vite_stripe_public_key",
+    "CUSTOM_DOMAIN": "@custom_domain"
+  }
+}
